@@ -27,7 +27,8 @@ export const initializeExpress = async (schema: GraphQLSchema) => {
   app.use(mongoSanitize());
 
   const server = new ApolloServer({
-    introspection: process.env.NODE_ENV !== 'production',
+    // introspection: process.env.NODE_ENV !== 'production',
+    introspection: true,
     context,
     schema,
     plugins: [responseCachePlugin()],
@@ -44,7 +45,7 @@ export const initializeExpress = async (schema: GraphQLSchema) => {
   server.applyMiddleware({
     app,
     path: '/graphql',
-    cors: { origin: 'https://studio.apollographql.com', credentials: true },
+    cors: { origin: process.env.CLIENT_ORIGIN, credentials: true },
   });
 
   app.listen(port, async () => {
