@@ -12,6 +12,7 @@ export const typeDefs = gql`
     lastname: String
     email: String
     role: Auth
+    fidelity: Int
     createdAt: DateTime
     updatedAt: DateTime
   }
@@ -42,6 +43,7 @@ export const typeDefs = gql`
   input UserUpdatedInput {
     firstname: String
     lastname: String
+    fidelity: Int
   }
 
   # Unions

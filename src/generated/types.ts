@@ -117,77 +117,102 @@ export type Logout = {
 
 export type LogoutResult = AuthError | Logout;
 
-export type Manager = {
-  __typename?: 'Manager';
+export type Menu = {
+  __typename?: 'Menu';
   _id?: Maybe<Scalars['ObjectId']>;
   createdAt?: Maybe<Scalars['DateTime']>;
-  email?: Maybe<Scalars['String']>;
-  firstname?: Maybe<Scalars['String']>;
-  lastname?: Maybe<Scalars['String']>;
-  role?: Maybe<Auth>;
+  name?: Maybe<Scalars['String']>;
+  products?: Maybe<Array<Maybe<Product>>>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
-export type ManagerBy = {
-  __typename?: 'ManagerBy';
-  entity: Manager;
+export type MenuBy = {
+  __typename?: 'MenuBy';
+  entity: Menu;
 };
 
-export type ManagerNotFound = {
-  __typename?: 'ManagerNotFound';
+export type MenuCreated = {
+  __typename?: 'MenuCreated';
+  entity: Menu;
   message: Scalars['String'];
 };
 
-export type ManagerRemoved = {
-  __typename?: 'ManagerRemoved';
-  entity: Manager;
+export type MenuCreatedInput = {
+  name: Scalars['String'];
+  products: Array<InputMaybe<Scalars['ObjectId']>>;
+};
+
+export type MenuCreatedResult = MenuCreated | MenuNotFound;
+
+export type MenuNotFound = {
+  __typename?: 'MenuNotFound';
   message: Scalars['String'];
 };
 
-export type ManagerRemovedResult = ManagerNotFound | ManagerRemoved;
-
-export type ManagerResult = ManagerBy | ManagerNotFound;
-
-export type ManagerUpdated = {
-  __typename?: 'ManagerUpdated';
-  entity: Manager;
+export type MenuRemoved = {
+  __typename?: 'MenuRemoved';
+  entity: Menu;
   message: Scalars['String'];
 };
 
-export type ManagerUpdatedInput = {
-  firstname?: InputMaybe<Scalars['String']>;
-  lastname?: InputMaybe<Scalars['String']>;
+export type MenuRemovedResult = MenuNotFound | MenuRemoved;
+
+export type MenuResult = MenuBy | MenuNotFound;
+
+export type MenuUpdated = {
+  __typename?: 'MenuUpdated';
+  entity: Menu;
+  message: Scalars['String'];
 };
 
-export type ManagerUpdatedResult = ManagerNotFound | ManagerUpdated;
-
-export type Managers = {
-  __typename?: 'Managers';
-  entities: Array<Manager>;
+export type MenuUpdatedInput = {
+  name?: InputMaybe<Scalars['String']>;
+  products?: InputMaybe<Array<InputMaybe<Scalars['ObjectId']>>>;
 };
 
-export type ManagersResult = ManagerNotFound | Managers;
+export type MenuUpdatedResult = MenuNotFound | MenuUpdated;
+
+export type Menus = {
+  __typename?: 'Menus';
+  entities: Array<Menu>;
+};
+
+export type MenusResult = MenuNotFound | Menus;
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createPost: PostCreatedResult;
+  createMenu: MenuCreatedResult;
+  createOrder: OrderCreatedResult;
+  createProduct: ProductCreatedResult;
   deleteAdmin: AdminDeletedResult;
   deleteUser: UserDeletedResult;
   login: LoginResult;
   logout: LogoutResult;
   refresh: RefreshResult;
   register: RegisterResult;
-  removeManager: ManagerRemovedResult;
-  removePost: PostRemovedResult;
+  removeMenu: MenuRemovedResult;
+  removeOrder: OrderRemovedResult;
+  removeProduct: ProductRemovedResult;
   updateAdmin: AdminUpdatedResult;
-  updateManager: ManagerUpdatedResult;
-  updatePost: PostUpdatedResult;
+  updateMenu: MenuUpdatedResult;
+  updateOrder: OrderUpdatedResult;
+  updateProduct: ProductUpdatedResult;
   updateUser: UserUpdatedResult;
 };
 
 
-export type MutationCreatePostArgs = {
-  input: PostCreatedInput;
+export type MutationCreateMenuArgs = {
+  input: MenuCreatedInput;
+};
+
+
+export type MutationCreateOrderArgs = {
+  input: OrderCreatedInput;
+};
+
+
+export type MutationCreateProductArgs = {
+  input: ProductCreatedInput;
 };
 
 
@@ -211,12 +236,17 @@ export type MutationRegisterArgs = {
 };
 
 
-export type MutationRemoveManagerArgs = {
+export type MutationRemoveMenuArgs = {
   id: Scalars['ObjectId'];
 };
 
 
-export type MutationRemovePostArgs = {
+export type MutationRemoveOrderArgs = {
+  id: Scalars['ObjectId'];
+};
+
+
+export type MutationRemoveProductArgs = {
   id: Scalars['ObjectId'];
 };
 
@@ -227,15 +257,21 @@ export type MutationUpdateAdminArgs = {
 };
 
 
-export type MutationUpdateManagerArgs = {
+export type MutationUpdateMenuArgs = {
   id: Scalars['ObjectId'];
-  input: ManagerUpdatedInput;
+  input: MenuUpdatedInput;
 };
 
 
-export type MutationUpdatePostArgs = {
+export type MutationUpdateOrderArgs = {
   id: Scalars['ObjectId'];
-  input: PostUpdatedInput;
+  input: OrderUpdatedInput;
+};
+
+
+export type MutationUpdateProductArgs = {
+  id: Scalars['ObjectId'];
+  input: ProductUpdatedInput;
 };
 
 
@@ -244,88 +280,166 @@ export type MutationUpdateUserArgs = {
   input: UserUpdatedInput;
 };
 
+export type Order = {
+  __typename?: 'Order';
+  _id?: Maybe<Scalars['ObjectId']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  menus?: Maybe<Array<Maybe<Menu>>>;
+  menusQuantity?: Maybe<Array<Maybe<Scalars['Int']>>>;
+  products?: Maybe<Array<Maybe<Product>>>;
+  productsQuantity?: Maybe<Array<Maybe<Scalars['Int']>>>;
+  status?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  user?: Maybe<User>;
+};
+
+export type OrderBy = {
+  __typename?: 'OrderBy';
+  entity: Order;
+};
+
+export type OrderCreated = {
+  __typename?: 'OrderCreated';
+  entity: Order;
+  message: Scalars['String'];
+};
+
+export type OrderCreatedInput = {
+  menus?: InputMaybe<Array<InputMaybe<Scalars['ObjectId']>>>;
+  menusQuantity?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  products?: InputMaybe<Array<InputMaybe<Scalars['ObjectId']>>>;
+  productsQuantity?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  user: Scalars['ObjectId'];
+};
+
+export type OrderCreatedResult = OrderCreated | OrderNotFound;
+
+export type OrderNotFound = {
+  __typename?: 'OrderNotFound';
+  message: Scalars['String'];
+};
+
+export type OrderRemoved = {
+  __typename?: 'OrderRemoved';
+  entity: Order;
+  message: Scalars['String'];
+};
+
+export type OrderRemovedResult = OrderNotFound | OrderRemoved;
+
+export type OrderResult = OrderBy | OrderNotFound;
+
+export type OrderUpdated = {
+  __typename?: 'OrderUpdated';
+  entity: Order;
+  message: Scalars['String'];
+};
+
+export type OrderUpdatedInput = {
+  menus?: InputMaybe<Array<InputMaybe<Scalars['ObjectId']>>>;
+  menusQuantity?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  products?: InputMaybe<Array<InputMaybe<Scalars['ObjectId']>>>;
+  productsQuantity?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  user?: InputMaybe<Scalars['ObjectId']>;
+};
+
+export type OrderUpdatedResult = OrderNotFound | OrderUpdated;
+
+export type Orders = {
+  __typename?: 'Orders';
+  entities: Array<Order>;
+};
+
+export type OrdersResult = OrderNotFound | Orders;
+
 export type PaginationInput = {
   limit?: InputMaybe<Scalars['Int']>;
   page?: InputMaybe<Scalars['Int']>;
 };
 
-export type Post = {
-  __typename?: 'Post';
+export type Product = {
+  __typename?: 'Product';
   _id?: Maybe<Scalars['ObjectId']>;
-  content?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
-  title?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  images?: Maybe<Array<Maybe<Scalars['String']>>>;
+  name?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Float']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
-  user?: Maybe<User>;
 };
 
-export type PostBy = {
-  __typename?: 'PostBy';
-  entity: Post;
+export type ProductBy = {
+  __typename?: 'ProductBy';
+  entity: Product;
 };
 
-export type PostCreated = {
-  __typename?: 'PostCreated';
-  entity: Post;
+export type ProductCreated = {
+  __typename?: 'ProductCreated';
+  entity: Product;
   message: Scalars['String'];
 };
 
-export type PostCreatedInput = {
-  content: Scalars['String'];
-  title: Scalars['String'];
-  user: Scalars['ObjectId'];
+export type ProductCreatedInput = {
+  description: Scalars['String'];
+  images: Array<InputMaybe<Scalars['String']>>;
+  name: Scalars['String'];
+  price: Scalars['Float'];
 };
 
-export type PostCreatedResult = PostCreated | PostNotFound;
+export type ProductCreatedResult = ProductCreated | ProductNotFound;
 
-export type PostNotFound = {
-  __typename?: 'PostNotFound';
+export type ProductNotFound = {
+  __typename?: 'ProductNotFound';
   message: Scalars['String'];
 };
 
-export type PostRemoved = {
-  __typename?: 'PostRemoved';
-  entity: Post;
+export type ProductRemoved = {
+  __typename?: 'ProductRemoved';
+  entity: Product;
   message: Scalars['String'];
 };
 
-export type PostRemovedResult = PostNotFound | PostRemoved;
+export type ProductRemovedResult = ProductNotFound | ProductRemoved;
 
-export type PostResult = PostBy | PostNotFound;
+export type ProductResult = ProductBy | ProductNotFound;
 
-export type PostUpdated = {
-  __typename?: 'PostUpdated';
-  entity: Post;
+export type ProductUpdated = {
+  __typename?: 'ProductUpdated';
+  entity: Product;
   message: Scalars['String'];
 };
 
-export type PostUpdatedInput = {
-  content?: InputMaybe<Scalars['String']>;
-  title?: InputMaybe<Scalars['String']>;
-  user?: InputMaybe<Scalars['ObjectId']>;
+export type ProductUpdatedInput = {
+  description?: InputMaybe<Scalars['String']>;
+  images?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  name?: InputMaybe<Scalars['String']>;
+  price?: InputMaybe<Scalars['Float']>;
 };
 
-export type PostUpdatedResult = PostNotFound | PostUpdated;
+export type ProductUpdatedResult = ProductNotFound | ProductUpdated;
 
-export type Posts = {
-  __typename?: 'Posts';
-  entities: Array<Post>;
+export type Products = {
+  __typename?: 'Products';
+  entities: Array<Product>;
 };
 
-export type PostsResult = PostNotFound | Posts;
+export type ProductsResult = ProductNotFound | Products;
 
 export type Query = {
   __typename?: 'Query';
   getAdminByField: AdminResult;
   getAdminById: AdminResult;
   getAllAdmins: AdminsResult;
-  getAllManagers: ManagersResult;
-  getAllPosts: PostsResult;
+  getAllMenus: MenusResult;
+  getAllOrders: OrdersResult;
+  getAllProducts: ProductsResult;
   getAllUsers: UsersResult;
-  getManagerByField: ManagerResult;
-  getManagerById: ManagerResult;
-  getPostByField: PostResult;
-  getPostById: PostResult;
+  getMenuByField: MenuResult;
+  getMenuById: MenuResult;
+  getOrderByField: OrderResult;
+  getOrderById: OrderResult;
+  getProductByField: ProductResult;
+  getProductById: ProductResult;
   getUserByField: UserResult;
   getUserById: UserResult;
 };
@@ -349,14 +463,21 @@ export type QueryGetAllAdminsArgs = {
 };
 
 
-export type QueryGetAllManagersArgs = {
+export type QueryGetAllMenusArgs = {
   filter?: InputMaybe<FilterInput>;
   paginate?: InputMaybe<PaginationInput>;
   sort?: InputMaybe<SortInput>;
 };
 
 
-export type QueryGetAllPostsArgs = {
+export type QueryGetAllOrdersArgs = {
+  filter?: InputMaybe<FilterInput>;
+  paginate?: InputMaybe<PaginationInput>;
+  sort?: InputMaybe<SortInput>;
+};
+
+
+export type QueryGetAllProductsArgs = {
   filter?: InputMaybe<FilterInput>;
   paginate?: InputMaybe<PaginationInput>;
   sort?: InputMaybe<SortInput>;
@@ -370,24 +491,35 @@ export type QueryGetAllUsersArgs = {
 };
 
 
-export type QueryGetManagerByFieldArgs = {
+export type QueryGetMenuByFieldArgs = {
   field: Scalars['String'];
   value: Scalars['String'];
 };
 
 
-export type QueryGetManagerByIdArgs = {
+export type QueryGetMenuByIdArgs = {
   id: Scalars['ObjectId'];
 };
 
 
-export type QueryGetPostByFieldArgs = {
+export type QueryGetOrderByFieldArgs = {
   field: Scalars['String'];
   value: Scalars['String'];
 };
 
 
-export type QueryGetPostByIdArgs = {
+export type QueryGetOrderByIdArgs = {
+  id: Scalars['ObjectId'];
+};
+
+
+export type QueryGetProductByFieldArgs = {
+  field: Scalars['String'];
+  value: Scalars['String'];
+};
+
+
+export type QueryGetProductByIdArgs = {
   id: Scalars['ObjectId'];
 };
 
@@ -445,6 +577,7 @@ export type User = {
   _id?: Maybe<Scalars['ObjectId']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   email?: Maybe<Scalars['String']>;
+  fidelity?: Maybe<Scalars['Int']>;
   firstname?: Maybe<Scalars['String']>;
   lastname?: Maybe<Scalars['String']>;
   role?: Maybe<Auth>;
@@ -478,6 +611,7 @@ export type UserUpdated = {
 };
 
 export type UserUpdatedInput = {
+  fidelity?: InputMaybe<Scalars['Int']>;
   firstname?: InputMaybe<Scalars['String']>;
   lastname?: InputMaybe<Scalars['String']>;
 };
@@ -577,40 +711,58 @@ export type ResolversTypes = {
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
   FilterCondition: FilterCondition;
   FilterInput: FilterInput;
+  Float: ResolverTypeWrapper<Scalars['Float']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Login: ResolverTypeWrapper<Login>;
   LoginInput: LoginInput;
   LoginResult: ResolversTypes['AuthError'] | ResolversTypes['Login'];
   Logout: ResolverTypeWrapper<Logout>;
   LogoutResult: ResolversTypes['AuthError'] | ResolversTypes['Logout'];
-  Manager: ResolverTypeWrapper<Manager>;
-  ManagerBy: ResolverTypeWrapper<ManagerBy>;
-  ManagerNotFound: ResolverTypeWrapper<ManagerNotFound>;
-  ManagerRemoved: ResolverTypeWrapper<ManagerRemoved>;
-  ManagerRemovedResult: ResolversTypes['ManagerNotFound'] | ResolversTypes['ManagerRemoved'];
-  ManagerResult: ResolversTypes['ManagerBy'] | ResolversTypes['ManagerNotFound'];
-  ManagerUpdated: ResolverTypeWrapper<ManagerUpdated>;
-  ManagerUpdatedInput: ManagerUpdatedInput;
-  ManagerUpdatedResult: ResolversTypes['ManagerNotFound'] | ResolversTypes['ManagerUpdated'];
-  Managers: ResolverTypeWrapper<Managers>;
-  ManagersResult: ResolversTypes['ManagerNotFound'] | ResolversTypes['Managers'];
+  Menu: ResolverTypeWrapper<Menu>;
+  MenuBy: ResolverTypeWrapper<MenuBy>;
+  MenuCreated: ResolverTypeWrapper<MenuCreated>;
+  MenuCreatedInput: MenuCreatedInput;
+  MenuCreatedResult: ResolversTypes['MenuCreated'] | ResolversTypes['MenuNotFound'];
+  MenuNotFound: ResolverTypeWrapper<MenuNotFound>;
+  MenuRemoved: ResolverTypeWrapper<MenuRemoved>;
+  MenuRemovedResult: ResolversTypes['MenuNotFound'] | ResolversTypes['MenuRemoved'];
+  MenuResult: ResolversTypes['MenuBy'] | ResolversTypes['MenuNotFound'];
+  MenuUpdated: ResolverTypeWrapper<MenuUpdated>;
+  MenuUpdatedInput: MenuUpdatedInput;
+  MenuUpdatedResult: ResolversTypes['MenuNotFound'] | ResolversTypes['MenuUpdated'];
+  Menus: ResolverTypeWrapper<Menus>;
+  MenusResult: ResolversTypes['MenuNotFound'] | ResolversTypes['Menus'];
   Mutation: ResolverTypeWrapper<{}>;
   ObjectId: ResolverTypeWrapper<Scalars['ObjectId']>;
+  Order: ResolverTypeWrapper<Order>;
+  OrderBy: ResolverTypeWrapper<OrderBy>;
+  OrderCreated: ResolverTypeWrapper<OrderCreated>;
+  OrderCreatedInput: OrderCreatedInput;
+  OrderCreatedResult: ResolversTypes['OrderCreated'] | ResolversTypes['OrderNotFound'];
+  OrderNotFound: ResolverTypeWrapper<OrderNotFound>;
+  OrderRemoved: ResolverTypeWrapper<OrderRemoved>;
+  OrderRemovedResult: ResolversTypes['OrderNotFound'] | ResolversTypes['OrderRemoved'];
+  OrderResult: ResolversTypes['OrderBy'] | ResolversTypes['OrderNotFound'];
+  OrderUpdated: ResolverTypeWrapper<OrderUpdated>;
+  OrderUpdatedInput: OrderUpdatedInput;
+  OrderUpdatedResult: ResolversTypes['OrderNotFound'] | ResolversTypes['OrderUpdated'];
+  Orders: ResolverTypeWrapper<Orders>;
+  OrdersResult: ResolversTypes['OrderNotFound'] | ResolversTypes['Orders'];
   PaginationInput: PaginationInput;
-  Post: ResolverTypeWrapper<Post>;
-  PostBy: ResolverTypeWrapper<PostBy>;
-  PostCreated: ResolverTypeWrapper<PostCreated>;
-  PostCreatedInput: PostCreatedInput;
-  PostCreatedResult: ResolversTypes['PostCreated'] | ResolversTypes['PostNotFound'];
-  PostNotFound: ResolverTypeWrapper<PostNotFound>;
-  PostRemoved: ResolverTypeWrapper<PostRemoved>;
-  PostRemovedResult: ResolversTypes['PostNotFound'] | ResolversTypes['PostRemoved'];
-  PostResult: ResolversTypes['PostBy'] | ResolversTypes['PostNotFound'];
-  PostUpdated: ResolverTypeWrapper<PostUpdated>;
-  PostUpdatedInput: PostUpdatedInput;
-  PostUpdatedResult: ResolversTypes['PostNotFound'] | ResolversTypes['PostUpdated'];
-  Posts: ResolverTypeWrapper<Posts>;
-  PostsResult: ResolversTypes['PostNotFound'] | ResolversTypes['Posts'];
+  Product: ResolverTypeWrapper<Product>;
+  ProductBy: ResolverTypeWrapper<ProductBy>;
+  ProductCreated: ResolverTypeWrapper<ProductCreated>;
+  ProductCreatedInput: ProductCreatedInput;
+  ProductCreatedResult: ResolversTypes['ProductCreated'] | ResolversTypes['ProductNotFound'];
+  ProductNotFound: ResolverTypeWrapper<ProductNotFound>;
+  ProductRemoved: ResolverTypeWrapper<ProductRemoved>;
+  ProductRemovedResult: ResolversTypes['ProductNotFound'] | ResolversTypes['ProductRemoved'];
+  ProductResult: ResolversTypes['ProductBy'] | ResolversTypes['ProductNotFound'];
+  ProductUpdated: ResolverTypeWrapper<ProductUpdated>;
+  ProductUpdatedInput: ProductUpdatedInput;
+  ProductUpdatedResult: ResolversTypes['ProductNotFound'] | ResolversTypes['ProductUpdated'];
+  Products: ResolverTypeWrapper<Products>;
+  ProductsResult: ResolversTypes['ProductNotFound'] | ResolversTypes['Products'];
   Query: ResolverTypeWrapper<{}>;
   Refresh: ResolverTypeWrapper<Refresh>;
   RefreshResult: ResolversTypes['AuthError'] | ResolversTypes['Refresh'];
@@ -653,40 +805,58 @@ export type ResolversParentTypes = {
   DateTime: Scalars['DateTime'];
   FilterCondition: FilterCondition;
   FilterInput: FilterInput;
+  Float: Scalars['Float'];
   Int: Scalars['Int'];
   Login: Login;
   LoginInput: LoginInput;
   LoginResult: ResolversParentTypes['AuthError'] | ResolversParentTypes['Login'];
   Logout: Logout;
   LogoutResult: ResolversParentTypes['AuthError'] | ResolversParentTypes['Logout'];
-  Manager: Manager;
-  ManagerBy: ManagerBy;
-  ManagerNotFound: ManagerNotFound;
-  ManagerRemoved: ManagerRemoved;
-  ManagerRemovedResult: ResolversParentTypes['ManagerNotFound'] | ResolversParentTypes['ManagerRemoved'];
-  ManagerResult: ResolversParentTypes['ManagerBy'] | ResolversParentTypes['ManagerNotFound'];
-  ManagerUpdated: ManagerUpdated;
-  ManagerUpdatedInput: ManagerUpdatedInput;
-  ManagerUpdatedResult: ResolversParentTypes['ManagerNotFound'] | ResolversParentTypes['ManagerUpdated'];
-  Managers: Managers;
-  ManagersResult: ResolversParentTypes['ManagerNotFound'] | ResolversParentTypes['Managers'];
+  Menu: Menu;
+  MenuBy: MenuBy;
+  MenuCreated: MenuCreated;
+  MenuCreatedInput: MenuCreatedInput;
+  MenuCreatedResult: ResolversParentTypes['MenuCreated'] | ResolversParentTypes['MenuNotFound'];
+  MenuNotFound: MenuNotFound;
+  MenuRemoved: MenuRemoved;
+  MenuRemovedResult: ResolversParentTypes['MenuNotFound'] | ResolversParentTypes['MenuRemoved'];
+  MenuResult: ResolversParentTypes['MenuBy'] | ResolversParentTypes['MenuNotFound'];
+  MenuUpdated: MenuUpdated;
+  MenuUpdatedInput: MenuUpdatedInput;
+  MenuUpdatedResult: ResolversParentTypes['MenuNotFound'] | ResolversParentTypes['MenuUpdated'];
+  Menus: Menus;
+  MenusResult: ResolversParentTypes['MenuNotFound'] | ResolversParentTypes['Menus'];
   Mutation: {};
   ObjectId: Scalars['ObjectId'];
+  Order: Order;
+  OrderBy: OrderBy;
+  OrderCreated: OrderCreated;
+  OrderCreatedInput: OrderCreatedInput;
+  OrderCreatedResult: ResolversParentTypes['OrderCreated'] | ResolversParentTypes['OrderNotFound'];
+  OrderNotFound: OrderNotFound;
+  OrderRemoved: OrderRemoved;
+  OrderRemovedResult: ResolversParentTypes['OrderNotFound'] | ResolversParentTypes['OrderRemoved'];
+  OrderResult: ResolversParentTypes['OrderBy'] | ResolversParentTypes['OrderNotFound'];
+  OrderUpdated: OrderUpdated;
+  OrderUpdatedInput: OrderUpdatedInput;
+  OrderUpdatedResult: ResolversParentTypes['OrderNotFound'] | ResolversParentTypes['OrderUpdated'];
+  Orders: Orders;
+  OrdersResult: ResolversParentTypes['OrderNotFound'] | ResolversParentTypes['Orders'];
   PaginationInput: PaginationInput;
-  Post: Post;
-  PostBy: PostBy;
-  PostCreated: PostCreated;
-  PostCreatedInput: PostCreatedInput;
-  PostCreatedResult: ResolversParentTypes['PostCreated'] | ResolversParentTypes['PostNotFound'];
-  PostNotFound: PostNotFound;
-  PostRemoved: PostRemoved;
-  PostRemovedResult: ResolversParentTypes['PostNotFound'] | ResolversParentTypes['PostRemoved'];
-  PostResult: ResolversParentTypes['PostBy'] | ResolversParentTypes['PostNotFound'];
-  PostUpdated: PostUpdated;
-  PostUpdatedInput: PostUpdatedInput;
-  PostUpdatedResult: ResolversParentTypes['PostNotFound'] | ResolversParentTypes['PostUpdated'];
-  Posts: Posts;
-  PostsResult: ResolversParentTypes['PostNotFound'] | ResolversParentTypes['Posts'];
+  Product: Product;
+  ProductBy: ProductBy;
+  ProductCreated: ProductCreated;
+  ProductCreatedInput: ProductCreatedInput;
+  ProductCreatedResult: ResolversParentTypes['ProductCreated'] | ResolversParentTypes['ProductNotFound'];
+  ProductNotFound: ProductNotFound;
+  ProductRemoved: ProductRemoved;
+  ProductRemovedResult: ResolversParentTypes['ProductNotFound'] | ResolversParentTypes['ProductRemoved'];
+  ProductResult: ResolversParentTypes['ProductBy'] | ResolversParentTypes['ProductNotFound'];
+  ProductUpdated: ProductUpdated;
+  ProductUpdatedInput: ProductUpdatedInput;
+  ProductUpdatedResult: ResolversParentTypes['ProductNotFound'] | ResolversParentTypes['ProductUpdated'];
+  Products: Products;
+  ProductsResult: ResolversParentTypes['ProductNotFound'] | ResolversParentTypes['Products'];
   Query: {};
   Refresh: Refresh;
   RefreshResult: ResolversParentTypes['AuthError'] | ResolversParentTypes['Refresh'];
@@ -800,73 +970,85 @@ export type LogoutResultResolvers<ContextType = Context, ParentType extends Reso
   __resolveType: TypeResolveFn<'AuthError' | 'Logout', ParentType, ContextType>;
 };
 
-export type ManagerResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Manager'] = ResolversParentTypes['Manager']> = {
+export type MenuResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Menu'] = ResolversParentTypes['Menu']> = {
   _id?: Resolver<Maybe<ResolversTypes['ObjectId']>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
-  email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  firstname?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  lastname?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  role?: Resolver<Maybe<ResolversTypes['Auth']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  products?: Resolver<Maybe<Array<Maybe<ResolversTypes['Product']>>>, ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ManagerByResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ManagerBy'] = ResolversParentTypes['ManagerBy']> = {
-  entity?: Resolver<ResolversTypes['Manager'], ParentType, ContextType>;
+export type MenuByResolvers<ContextType = Context, ParentType extends ResolversParentTypes['MenuBy'] = ResolversParentTypes['MenuBy']> = {
+  entity?: Resolver<ResolversTypes['Menu'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ManagerNotFoundResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ManagerNotFound'] = ResolversParentTypes['ManagerNotFound']> = {
+export type MenuCreatedResolvers<ContextType = Context, ParentType extends ResolversParentTypes['MenuCreated'] = ResolversParentTypes['MenuCreated']> = {
+  entity?: Resolver<ResolversTypes['Menu'], ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ManagerRemovedResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ManagerRemoved'] = ResolversParentTypes['ManagerRemoved']> = {
-  entity?: Resolver<ResolversTypes['Manager'], ParentType, ContextType>;
+export type MenuCreatedResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['MenuCreatedResult'] = ResolversParentTypes['MenuCreatedResult']> = {
+  __resolveType: TypeResolveFn<'MenuCreated' | 'MenuNotFound', ParentType, ContextType>;
+};
+
+export type MenuNotFoundResolvers<ContextType = Context, ParentType extends ResolversParentTypes['MenuNotFound'] = ResolversParentTypes['MenuNotFound']> = {
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ManagerRemovedResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ManagerRemovedResult'] = ResolversParentTypes['ManagerRemovedResult']> = {
-  __resolveType: TypeResolveFn<'ManagerNotFound' | 'ManagerRemoved', ParentType, ContextType>;
-};
-
-export type ManagerResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ManagerResult'] = ResolversParentTypes['ManagerResult']> = {
-  __resolveType: TypeResolveFn<'ManagerBy' | 'ManagerNotFound', ParentType, ContextType>;
-};
-
-export type ManagerUpdatedResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ManagerUpdated'] = ResolversParentTypes['ManagerUpdated']> = {
-  entity?: Resolver<ResolversTypes['Manager'], ParentType, ContextType>;
+export type MenuRemovedResolvers<ContextType = Context, ParentType extends ResolversParentTypes['MenuRemoved'] = ResolversParentTypes['MenuRemoved']> = {
+  entity?: Resolver<ResolversTypes['Menu'], ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ManagerUpdatedResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ManagerUpdatedResult'] = ResolversParentTypes['ManagerUpdatedResult']> = {
-  __resolveType: TypeResolveFn<'ManagerNotFound' | 'ManagerUpdated', ParentType, ContextType>;
+export type MenuRemovedResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['MenuRemovedResult'] = ResolversParentTypes['MenuRemovedResult']> = {
+  __resolveType: TypeResolveFn<'MenuNotFound' | 'MenuRemoved', ParentType, ContextType>;
 };
 
-export type ManagersResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Managers'] = ResolversParentTypes['Managers']> = {
-  entities?: Resolver<Array<ResolversTypes['Manager']>, ParentType, ContextType>;
+export type MenuResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['MenuResult'] = ResolversParentTypes['MenuResult']> = {
+  __resolveType: TypeResolveFn<'MenuBy' | 'MenuNotFound', ParentType, ContextType>;
+};
+
+export type MenuUpdatedResolvers<ContextType = Context, ParentType extends ResolversParentTypes['MenuUpdated'] = ResolversParentTypes['MenuUpdated']> = {
+  entity?: Resolver<ResolversTypes['Menu'], ParentType, ContextType>;
+  message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ManagersResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ManagersResult'] = ResolversParentTypes['ManagersResult']> = {
-  __resolveType: TypeResolveFn<'ManagerNotFound' | 'Managers', ParentType, ContextType>;
+export type MenuUpdatedResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['MenuUpdatedResult'] = ResolversParentTypes['MenuUpdatedResult']> = {
+  __resolveType: TypeResolveFn<'MenuNotFound' | 'MenuUpdated', ParentType, ContextType>;
+};
+
+export type MenusResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Menus'] = ResolversParentTypes['Menus']> = {
+  entities?: Resolver<Array<ResolversTypes['Menu']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type MenusResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['MenusResult'] = ResolversParentTypes['MenusResult']> = {
+  __resolveType: TypeResolveFn<'MenuNotFound' | 'Menus', ParentType, ContextType>;
 };
 
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  createPost?: Resolver<ResolversTypes['PostCreatedResult'], ParentType, ContextType, RequireFields<MutationCreatePostArgs, 'input'>>;
+  createMenu?: Resolver<ResolversTypes['MenuCreatedResult'], ParentType, ContextType, RequireFields<MutationCreateMenuArgs, 'input'>>;
+  createOrder?: Resolver<ResolversTypes['OrderCreatedResult'], ParentType, ContextType, RequireFields<MutationCreateOrderArgs, 'input'>>;
+  createProduct?: Resolver<ResolversTypes['ProductCreatedResult'], ParentType, ContextType, RequireFields<MutationCreateProductArgs, 'input'>>;
   deleteAdmin?: Resolver<ResolversTypes['AdminDeletedResult'], ParentType, ContextType, RequireFields<MutationDeleteAdminArgs, 'id'>>;
   deleteUser?: Resolver<ResolversTypes['UserDeletedResult'], ParentType, ContextType, RequireFields<MutationDeleteUserArgs, 'id'>>;
   login?: Resolver<ResolversTypes['LoginResult'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'input'>>;
   logout?: Resolver<ResolversTypes['LogoutResult'], ParentType, ContextType>;
   refresh?: Resolver<ResolversTypes['RefreshResult'], ParentType, ContextType>;
   register?: Resolver<ResolversTypes['RegisterResult'], ParentType, ContextType, RequireFields<MutationRegisterArgs, 'input'>>;
-  removeManager?: Resolver<ResolversTypes['ManagerRemovedResult'], ParentType, ContextType, RequireFields<MutationRemoveManagerArgs, 'id'>>;
-  removePost?: Resolver<ResolversTypes['PostRemovedResult'], ParentType, ContextType, RequireFields<MutationRemovePostArgs, 'id'>>;
+  removeMenu?: Resolver<ResolversTypes['MenuRemovedResult'], ParentType, ContextType, RequireFields<MutationRemoveMenuArgs, 'id'>>;
+  removeOrder?: Resolver<ResolversTypes['OrderRemovedResult'], ParentType, ContextType, RequireFields<MutationRemoveOrderArgs, 'id'>>;
+  removeProduct?: Resolver<ResolversTypes['ProductRemovedResult'], ParentType, ContextType, RequireFields<MutationRemoveProductArgs, 'id'>>;
   updateAdmin?: Resolver<ResolversTypes['AdminUpdatedResult'], ParentType, ContextType, RequireFields<MutationUpdateAdminArgs, 'id' | 'input'>>;
-  updateManager?: Resolver<ResolversTypes['ManagerUpdatedResult'], ParentType, ContextType, RequireFields<MutationUpdateManagerArgs, 'id' | 'input'>>;
-  updatePost?: Resolver<ResolversTypes['PostUpdatedResult'], ParentType, ContextType, RequireFields<MutationUpdatePostArgs, 'id' | 'input'>>;
+  updateMenu?: Resolver<ResolversTypes['MenuUpdatedResult'], ParentType, ContextType, RequireFields<MutationUpdateMenuArgs, 'id' | 'input'>>;
+  updateOrder?: Resolver<ResolversTypes['OrderUpdatedResult'], ParentType, ContextType, RequireFields<MutationUpdateOrderArgs, 'id' | 'input'>>;
+  updateProduct?: Resolver<ResolversTypes['ProductUpdatedResult'], ParentType, ContextType, RequireFields<MutationUpdateProductArgs, 'id' | 'input'>>;
   updateUser?: Resolver<ResolversTypes['UserUpdatedResult'], ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'id' | 'input'>>;
 };
 
@@ -874,80 +1056,150 @@ export interface ObjectIdScalarConfig extends GraphQLScalarTypeConfig<ResolversT
   name: 'ObjectId';
 }
 
-export type PostResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Post'] = ResolversParentTypes['Post']> = {
+export type OrderResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Order'] = ResolversParentTypes['Order']> = {
   _id?: Resolver<Maybe<ResolversTypes['ObjectId']>, ParentType, ContextType>;
-  content?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
-  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  menus?: Resolver<Maybe<Array<Maybe<ResolversTypes['Menu']>>>, ParentType, ContextType>;
+  menusQuantity?: Resolver<Maybe<Array<Maybe<ResolversTypes['Int']>>>, ParentType, ContextType>;
+  products?: Resolver<Maybe<Array<Maybe<ResolversTypes['Product']>>>, ParentType, ContextType>;
+  productsQuantity?: Resolver<Maybe<Array<Maybe<ResolversTypes['Int']>>>, ParentType, ContextType>;
+  status?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type PostByResolvers<ContextType = Context, ParentType extends ResolversParentTypes['PostBy'] = ResolversParentTypes['PostBy']> = {
-  entity?: Resolver<ResolversTypes['Post'], ParentType, ContextType>;
+export type OrderByResolvers<ContextType = Context, ParentType extends ResolversParentTypes['OrderBy'] = ResolversParentTypes['OrderBy']> = {
+  entity?: Resolver<ResolversTypes['Order'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type PostCreatedResolvers<ContextType = Context, ParentType extends ResolversParentTypes['PostCreated'] = ResolversParentTypes['PostCreated']> = {
-  entity?: Resolver<ResolversTypes['Post'], ParentType, ContextType>;
+export type OrderCreatedResolvers<ContextType = Context, ParentType extends ResolversParentTypes['OrderCreated'] = ResolversParentTypes['OrderCreated']> = {
+  entity?: Resolver<ResolversTypes['Order'], ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type PostCreatedResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['PostCreatedResult'] = ResolversParentTypes['PostCreatedResult']> = {
-  __resolveType: TypeResolveFn<'PostCreated' | 'PostNotFound', ParentType, ContextType>;
+export type OrderCreatedResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['OrderCreatedResult'] = ResolversParentTypes['OrderCreatedResult']> = {
+  __resolveType: TypeResolveFn<'OrderCreated' | 'OrderNotFound', ParentType, ContextType>;
 };
 
-export type PostNotFoundResolvers<ContextType = Context, ParentType extends ResolversParentTypes['PostNotFound'] = ResolversParentTypes['PostNotFound']> = {
+export type OrderNotFoundResolvers<ContextType = Context, ParentType extends ResolversParentTypes['OrderNotFound'] = ResolversParentTypes['OrderNotFound']> = {
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type PostRemovedResolvers<ContextType = Context, ParentType extends ResolversParentTypes['PostRemoved'] = ResolversParentTypes['PostRemoved']> = {
-  entity?: Resolver<ResolversTypes['Post'], ParentType, ContextType>;
+export type OrderRemovedResolvers<ContextType = Context, ParentType extends ResolversParentTypes['OrderRemoved'] = ResolversParentTypes['OrderRemoved']> = {
+  entity?: Resolver<ResolversTypes['Order'], ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type PostRemovedResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['PostRemovedResult'] = ResolversParentTypes['PostRemovedResult']> = {
-  __resolveType: TypeResolveFn<'PostNotFound' | 'PostRemoved', ParentType, ContextType>;
+export type OrderRemovedResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['OrderRemovedResult'] = ResolversParentTypes['OrderRemovedResult']> = {
+  __resolveType: TypeResolveFn<'OrderNotFound' | 'OrderRemoved', ParentType, ContextType>;
 };
 
-export type PostResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['PostResult'] = ResolversParentTypes['PostResult']> = {
-  __resolveType: TypeResolveFn<'PostBy' | 'PostNotFound', ParentType, ContextType>;
+export type OrderResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['OrderResult'] = ResolversParentTypes['OrderResult']> = {
+  __resolveType: TypeResolveFn<'OrderBy' | 'OrderNotFound', ParentType, ContextType>;
 };
 
-export type PostUpdatedResolvers<ContextType = Context, ParentType extends ResolversParentTypes['PostUpdated'] = ResolversParentTypes['PostUpdated']> = {
-  entity?: Resolver<ResolversTypes['Post'], ParentType, ContextType>;
+export type OrderUpdatedResolvers<ContextType = Context, ParentType extends ResolversParentTypes['OrderUpdated'] = ResolversParentTypes['OrderUpdated']> = {
+  entity?: Resolver<ResolversTypes['Order'], ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type PostUpdatedResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['PostUpdatedResult'] = ResolversParentTypes['PostUpdatedResult']> = {
-  __resolveType: TypeResolveFn<'PostNotFound' | 'PostUpdated', ParentType, ContextType>;
+export type OrderUpdatedResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['OrderUpdatedResult'] = ResolversParentTypes['OrderUpdatedResult']> = {
+  __resolveType: TypeResolveFn<'OrderNotFound' | 'OrderUpdated', ParentType, ContextType>;
 };
 
-export type PostsResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Posts'] = ResolversParentTypes['Posts']> = {
-  entities?: Resolver<Array<ResolversTypes['Post']>, ParentType, ContextType>;
+export type OrdersResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Orders'] = ResolversParentTypes['Orders']> = {
+  entities?: Resolver<Array<ResolversTypes['Order']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type PostsResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['PostsResult'] = ResolversParentTypes['PostsResult']> = {
-  __resolveType: TypeResolveFn<'PostNotFound' | 'Posts', ParentType, ContextType>;
+export type OrdersResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['OrdersResult'] = ResolversParentTypes['OrdersResult']> = {
+  __resolveType: TypeResolveFn<'OrderNotFound' | 'Orders', ParentType, ContextType>;
+};
+
+export type ProductResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Product'] = ResolversParentTypes['Product']> = {
+  _id?: Resolver<Maybe<ResolversTypes['ObjectId']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  images?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  price?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ProductByResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ProductBy'] = ResolversParentTypes['ProductBy']> = {
+  entity?: Resolver<ResolversTypes['Product'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ProductCreatedResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ProductCreated'] = ResolversParentTypes['ProductCreated']> = {
+  entity?: Resolver<ResolversTypes['Product'], ParentType, ContextType>;
+  message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ProductCreatedResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ProductCreatedResult'] = ResolversParentTypes['ProductCreatedResult']> = {
+  __resolveType: TypeResolveFn<'ProductCreated' | 'ProductNotFound', ParentType, ContextType>;
+};
+
+export type ProductNotFoundResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ProductNotFound'] = ResolversParentTypes['ProductNotFound']> = {
+  message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ProductRemovedResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ProductRemoved'] = ResolversParentTypes['ProductRemoved']> = {
+  entity?: Resolver<ResolversTypes['Product'], ParentType, ContextType>;
+  message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ProductRemovedResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ProductRemovedResult'] = ResolversParentTypes['ProductRemovedResult']> = {
+  __resolveType: TypeResolveFn<'ProductNotFound' | 'ProductRemoved', ParentType, ContextType>;
+};
+
+export type ProductResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ProductResult'] = ResolversParentTypes['ProductResult']> = {
+  __resolveType: TypeResolveFn<'ProductBy' | 'ProductNotFound', ParentType, ContextType>;
+};
+
+export type ProductUpdatedResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ProductUpdated'] = ResolversParentTypes['ProductUpdated']> = {
+  entity?: Resolver<ResolversTypes['Product'], ParentType, ContextType>;
+  message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ProductUpdatedResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ProductUpdatedResult'] = ResolversParentTypes['ProductUpdatedResult']> = {
+  __resolveType: TypeResolveFn<'ProductNotFound' | 'ProductUpdated', ParentType, ContextType>;
+};
+
+export type ProductsResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Products'] = ResolversParentTypes['Products']> = {
+  entities?: Resolver<Array<ResolversTypes['Product']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ProductsResultResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ProductsResult'] = ResolversParentTypes['ProductsResult']> = {
+  __resolveType: TypeResolveFn<'ProductNotFound' | 'Products', ParentType, ContextType>;
 };
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   getAdminByField?: Resolver<ResolversTypes['AdminResult'], ParentType, ContextType, RequireFields<QueryGetAdminByFieldArgs, 'field' | 'value'>>;
   getAdminById?: Resolver<ResolversTypes['AdminResult'], ParentType, ContextType, RequireFields<QueryGetAdminByIdArgs, 'id'>>;
   getAllAdmins?: Resolver<ResolversTypes['AdminsResult'], ParentType, ContextType, Partial<QueryGetAllAdminsArgs>>;
-  getAllManagers?: Resolver<ResolversTypes['ManagersResult'], ParentType, ContextType, Partial<QueryGetAllManagersArgs>>;
-  getAllPosts?: Resolver<ResolversTypes['PostsResult'], ParentType, ContextType, Partial<QueryGetAllPostsArgs>>;
+  getAllMenus?: Resolver<ResolversTypes['MenusResult'], ParentType, ContextType, Partial<QueryGetAllMenusArgs>>;
+  getAllOrders?: Resolver<ResolversTypes['OrdersResult'], ParentType, ContextType, Partial<QueryGetAllOrdersArgs>>;
+  getAllProducts?: Resolver<ResolversTypes['ProductsResult'], ParentType, ContextType, Partial<QueryGetAllProductsArgs>>;
   getAllUsers?: Resolver<ResolversTypes['UsersResult'], ParentType, ContextType, Partial<QueryGetAllUsersArgs>>;
-  getManagerByField?: Resolver<ResolversTypes['ManagerResult'], ParentType, ContextType, RequireFields<QueryGetManagerByFieldArgs, 'field' | 'value'>>;
-  getManagerById?: Resolver<ResolversTypes['ManagerResult'], ParentType, ContextType, RequireFields<QueryGetManagerByIdArgs, 'id'>>;
-  getPostByField?: Resolver<ResolversTypes['PostResult'], ParentType, ContextType, RequireFields<QueryGetPostByFieldArgs, 'field' | 'value'>>;
-  getPostById?: Resolver<ResolversTypes['PostResult'], ParentType, ContextType, RequireFields<QueryGetPostByIdArgs, 'id'>>;
+  getMenuByField?: Resolver<ResolversTypes['MenuResult'], ParentType, ContextType, RequireFields<QueryGetMenuByFieldArgs, 'field' | 'value'>>;
+  getMenuById?: Resolver<ResolversTypes['MenuResult'], ParentType, ContextType, RequireFields<QueryGetMenuByIdArgs, 'id'>>;
+  getOrderByField?: Resolver<ResolversTypes['OrderResult'], ParentType, ContextType, RequireFields<QueryGetOrderByFieldArgs, 'field' | 'value'>>;
+  getOrderById?: Resolver<ResolversTypes['OrderResult'], ParentType, ContextType, RequireFields<QueryGetOrderByIdArgs, 'id'>>;
+  getProductByField?: Resolver<ResolversTypes['ProductResult'], ParentType, ContextType, RequireFields<QueryGetProductByFieldArgs, 'field' | 'value'>>;
+  getProductById?: Resolver<ResolversTypes['ProductResult'], ParentType, ContextType, RequireFields<QueryGetProductByIdArgs, 'id'>>;
   getUserByField?: Resolver<ResolversTypes['UserResult'], ParentType, ContextType, RequireFields<QueryGetUserByFieldArgs, 'field' | 'value'>>;
   getUserById?: Resolver<ResolversTypes['UserResult'], ParentType, ContextType, RequireFields<QueryGetUserByIdArgs, 'id'>>;
 };
@@ -976,6 +1228,7 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
   _id?: Resolver<Maybe<ResolversTypes['ObjectId']>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  fidelity?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   firstname?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   lastname?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   role?: Resolver<Maybe<ResolversTypes['Auth']>, ParentType, ContextType>;
@@ -1044,30 +1297,44 @@ export type Resolvers<ContextType = Context> = {
   LoginResult?: LoginResultResolvers<ContextType>;
   Logout?: LogoutResolvers<ContextType>;
   LogoutResult?: LogoutResultResolvers<ContextType>;
-  Manager?: ManagerResolvers<ContextType>;
-  ManagerBy?: ManagerByResolvers<ContextType>;
-  ManagerNotFound?: ManagerNotFoundResolvers<ContextType>;
-  ManagerRemoved?: ManagerRemovedResolvers<ContextType>;
-  ManagerRemovedResult?: ManagerRemovedResultResolvers<ContextType>;
-  ManagerResult?: ManagerResultResolvers<ContextType>;
-  ManagerUpdated?: ManagerUpdatedResolvers<ContextType>;
-  ManagerUpdatedResult?: ManagerUpdatedResultResolvers<ContextType>;
-  Managers?: ManagersResolvers<ContextType>;
-  ManagersResult?: ManagersResultResolvers<ContextType>;
+  Menu?: MenuResolvers<ContextType>;
+  MenuBy?: MenuByResolvers<ContextType>;
+  MenuCreated?: MenuCreatedResolvers<ContextType>;
+  MenuCreatedResult?: MenuCreatedResultResolvers<ContextType>;
+  MenuNotFound?: MenuNotFoundResolvers<ContextType>;
+  MenuRemoved?: MenuRemovedResolvers<ContextType>;
+  MenuRemovedResult?: MenuRemovedResultResolvers<ContextType>;
+  MenuResult?: MenuResultResolvers<ContextType>;
+  MenuUpdated?: MenuUpdatedResolvers<ContextType>;
+  MenuUpdatedResult?: MenuUpdatedResultResolvers<ContextType>;
+  Menus?: MenusResolvers<ContextType>;
+  MenusResult?: MenusResultResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   ObjectId?: GraphQLScalarType;
-  Post?: PostResolvers<ContextType>;
-  PostBy?: PostByResolvers<ContextType>;
-  PostCreated?: PostCreatedResolvers<ContextType>;
-  PostCreatedResult?: PostCreatedResultResolvers<ContextType>;
-  PostNotFound?: PostNotFoundResolvers<ContextType>;
-  PostRemoved?: PostRemovedResolvers<ContextType>;
-  PostRemovedResult?: PostRemovedResultResolvers<ContextType>;
-  PostResult?: PostResultResolvers<ContextType>;
-  PostUpdated?: PostUpdatedResolvers<ContextType>;
-  PostUpdatedResult?: PostUpdatedResultResolvers<ContextType>;
-  Posts?: PostsResolvers<ContextType>;
-  PostsResult?: PostsResultResolvers<ContextType>;
+  Order?: OrderResolvers<ContextType>;
+  OrderBy?: OrderByResolvers<ContextType>;
+  OrderCreated?: OrderCreatedResolvers<ContextType>;
+  OrderCreatedResult?: OrderCreatedResultResolvers<ContextType>;
+  OrderNotFound?: OrderNotFoundResolvers<ContextType>;
+  OrderRemoved?: OrderRemovedResolvers<ContextType>;
+  OrderRemovedResult?: OrderRemovedResultResolvers<ContextType>;
+  OrderResult?: OrderResultResolvers<ContextType>;
+  OrderUpdated?: OrderUpdatedResolvers<ContextType>;
+  OrderUpdatedResult?: OrderUpdatedResultResolvers<ContextType>;
+  Orders?: OrdersResolvers<ContextType>;
+  OrdersResult?: OrdersResultResolvers<ContextType>;
+  Product?: ProductResolvers<ContextType>;
+  ProductBy?: ProductByResolvers<ContextType>;
+  ProductCreated?: ProductCreatedResolvers<ContextType>;
+  ProductCreatedResult?: ProductCreatedResultResolvers<ContextType>;
+  ProductNotFound?: ProductNotFoundResolvers<ContextType>;
+  ProductRemoved?: ProductRemovedResolvers<ContextType>;
+  ProductRemovedResult?: ProductRemovedResultResolvers<ContextType>;
+  ProductResult?: ProductResultResolvers<ContextType>;
+  ProductUpdated?: ProductUpdatedResolvers<ContextType>;
+  ProductUpdatedResult?: ProductUpdatedResultResolvers<ContextType>;
+  Products?: ProductsResolvers<ContextType>;
+  ProductsResult?: ProductsResultResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Refresh?: RefreshResolvers<ContextType>;
   RefreshResult?: RefreshResultResolvers<ContextType>;

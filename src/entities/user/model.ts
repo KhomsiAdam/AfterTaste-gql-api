@@ -29,6 +29,10 @@ const UserSchema = new Schema<UserEntity>(
       type: Schema.Types.ObjectId,
       ref: 'Auth',
     },
+    fidelity: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true },
 );

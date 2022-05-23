@@ -1,5 +1,5 @@
 import express from 'express';
-import bodyParser from 'body-parser';
+// import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import depthLimit from 'graphql-depth-limit';
 import compression from 'compression';
@@ -18,7 +18,7 @@ export const initializeExpress = async (schema: GraphQLSchema) => {
   const app = express();
 
   app.use(helmet());
-  app.use(bodyParser.json());
+  // app.use(bodyParser.json());
   app.use(cookieParser());
   app.use(morgan);
   app.use(compression());
@@ -27,8 +27,7 @@ export const initializeExpress = async (schema: GraphQLSchema) => {
   app.use(mongoSanitize());
 
   const server = new ApolloServer({
-    // introspection: process.env.NODE_ENV !== 'production',
-    introspection: true,
+    introspection: process.env.NODE_ENV !== 'production',
     context,
     schema,
     plugins: [responseCachePlugin()],
@@ -45,7 +44,7 @@ export const initializeExpress = async (schema: GraphQLSchema) => {
   server.applyMiddleware({
     app,
     path: '/graphql',
-    cors: { origin: process.env.CLIENT_ORIGIN, credentials: true },
+    cors: { origin: [process.env.CLIENT_ORIGIN as string, 'http://localhost:3000'], credentials: true },
   });
 
   app.listen(port, async () => {

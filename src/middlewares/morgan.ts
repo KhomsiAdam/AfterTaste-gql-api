@@ -11,16 +11,20 @@ const stream = {
 const skip = (req: Request) => {
   const env = process.env.NODE_ENV || 'development';
   // Skip log if the GraphQL operation is 'IntrospectionQuery' or if request method is 'OPTIONS'
-  if (req.body.operationName === 'IntrospectionQuery' || req.method === 'OPTIONS') return true;
+  if (req.body && req.body.operationName && req.body.operationName === 'IntrospectionQuery') return true;
+  if (req.method === 'OPTIONS') return true;
   return env !== 'development';
 };
 
 // Log GraphQL operations (query/mutation)
 morgan.token('graphql-query', (req: Request) => {
-  const { query, operationName } = req.body;
-  if (!query) return '';
-  const operationType = query.split(' ')[0];
-  return `${operationType}: ${operationName}`;
+  if (req.body) {
+    const { query, operationName } = req.body;
+    if (!query) return '';
+    const queryName = operationName || query.split(' ')[1];
+    const operationType = query.split(' ')[0];
+    return `${operationType}: ${queryName}`;
+  }
 });
 
 // Build the morgan middleware

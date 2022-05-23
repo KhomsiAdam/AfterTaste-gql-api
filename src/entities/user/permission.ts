@@ -1,9 +1,9 @@
 import { is } from '@middlewares/rules';
-import { or } from 'graphql-shield';
+import { allow, or } from 'graphql-shield';
 
 const permission = {
   Query: {
-    getAllUsers: is.Auth,
+    getAllUsers: allow,
     getUserById: is.Auth,
     getUserByField: is.Auth,
   },

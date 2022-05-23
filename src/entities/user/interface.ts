@@ -6,4 +6,5 @@ export interface UserEntity {
   firstname: string;
   lastname: string;
   role?: Types.ObjectId;
+  fidelity: number;
 }

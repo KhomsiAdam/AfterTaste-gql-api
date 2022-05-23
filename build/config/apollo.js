@@ -37,7 +37,7 @@ const initializeExpress = (schema) => __awaiter(void 0, void 0, void 0, function
     app.use(express_1.default.json({ limit: '10kb' }));
     app.use((0, express_mongo_sanitize_1.default)());
     const server = new apollo_server_express_1.ApolloServer({
-        introspection: process.env.NODE_ENV !== 'production',
+        introspection: true,
         context: context_1.context,
         schema,
         plugins: [(0, apollo_server_plugin_response_cache_1.default)()],
@@ -53,7 +53,7 @@ const initializeExpress = (schema) => __awaiter(void 0, void 0, void 0, function
     server.applyMiddleware({
         app,
         path: '/graphql',
-        cors: { origin: 'https://studio.apollographql.com', credentials: true },
+        cors: { origin: process.env.CLIENT_ORIGIN, credentials: true },
     });
     app.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
         logger_service_1.log.info(`Server ready at: http://localhost:${port}${server.graphqlPath}`);
