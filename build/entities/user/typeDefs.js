@@ -14,6 +14,7 @@ exports.typeDefs = (0, apollo_server_express_1.gql) `
     lastname: String
     email: String
     role: Auth
+    fidelity: Int
     createdAt: DateTime
     updatedAt: DateTime
   }
@@ -44,6 +45,7 @@ exports.typeDefs = (0, apollo_server_express_1.gql) `
   input UserUpdatedInput {
     firstname: String
     lastname: String
+    fidelity: Int
   }
 
   # Unions

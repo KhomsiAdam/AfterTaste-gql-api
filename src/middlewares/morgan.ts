@@ -18,13 +18,12 @@ const skip = (req: Request) => {
 
 // Log GraphQL operations (query/mutation)
 morgan.token('graphql-query', (req: Request) => {
-  if (req.body) {
-    const { query, operationName } = req.body;
-    if (!query) return '';
-    const queryName = operationName || query.split(' ')[1];
-    const operationType = query.split(' ')[0];
-    return `${operationType}: ${queryName}`;
-  }
+  if (!req.body) return '';
+  const { query, operationName } = req.body;
+  if (!query) return '';
+  const queryName = operationName || query.split(' ')[1];
+  const operationType = query.split(' ')[0];
+  return `${operationType}: ${queryName}`;
 });
 
 // Build the morgan middleware

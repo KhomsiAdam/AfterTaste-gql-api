@@ -4,13 +4,14 @@ const rules_1 = require("../../middlewares/rules");
 const graphql_shield_1 = require("graphql-shield");
 const permission = {
     Query: {
-        getAllUsers: graphql_shield_1.allow,
-        getUserById: rules_1.is.Auth,
-        getUserByField: rules_1.is.Auth,
+        getAllProducts: graphql_shield_1.allow,
+        getProductById: graphql_shield_1.allow,
+        getProductByField: graphql_shield_1.allow,
     },
     Mutation: {
-        updateUser: (0, graphql_shield_1.or)(rules_1.is.Self, rules_1.is.Admin),
-        deleteUser: (0, graphql_shield_1.or)(rules_1.is.Self, rules_1.is.Admin),
+        createProduct: rules_1.is.Admin,
+        updateProduct: rules_1.is.Admin,
+        removeProduct: rules_1.is.Admin,
     },
 };
 exports.default = permission;

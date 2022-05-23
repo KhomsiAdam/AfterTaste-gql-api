@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.initializeExpress = void 0;
 const express_1 = __importDefault(require("express"));
-const body_parser_1 = __importDefault(require("body-parser"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const graphql_depth_limit_1 = __importDefault(require("graphql-depth-limit"));
 const compression_1 = __importDefault(require("compression"));
@@ -29,7 +28,6 @@ const port = process.env.PORT || 4000;
 const initializeExpress = (schema) => __awaiter(void 0, void 0, void 0, function* () {
     const app = (0, express_1.default)();
     app.use((0, helmet_1.default)());
-    app.use(body_parser_1.default.json());
     app.use((0, cookie_parser_1.default)());
     app.use(_middlewares_1.morgan);
     app.use((0, compression_1.default)());
@@ -37,7 +35,7 @@ const initializeExpress = (schema) => __awaiter(void 0, void 0, void 0, function
     app.use(express_1.default.json({ limit: '10kb' }));
     app.use((0, express_mongo_sanitize_1.default)());
     const server = new apollo_server_express_1.ApolloServer({
-        introspection: true,
+        introspection: process.env.NODE_ENV !== 'production',
         context: context_1.context,
         schema,
         plugins: [(0, apollo_server_plugin_response_cache_1.default)()],
@@ -53,7 +51,7 @@ const initializeExpress = (schema) => __awaiter(void 0, void 0, void 0, function
     server.applyMiddleware({
         app,
         path: '/graphql',
-        cors: { origin: process.env.CLIENT_ORIGIN, credentials: true },
+        cors: { origin: [process.env.CLIENT_ORIGIN, 'http://localhost:3000'], credentials: true },
     });
     app.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
         logger_service_1.log.info(`Server ready at: http://localhost:${port}${server.graphqlPath}`);

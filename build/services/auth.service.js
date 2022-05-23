@@ -58,7 +58,9 @@ const verifyAuth = (req, role, permission, argsId) => __awaiter(void 0, void 0, 
         if (permission && permission === constants_1.Permissions.SELF && argsId && argsId !== decoded.userId)
             return new apollo_server_core_1.ForbiddenError(constants_1.ErrorMessages.NOT_AUTHORIZED);
         if (permission && permission === constants_1.Permissions.OWN && argsId) {
-            const entityName = (0, _helpers_1.getEntityFromOperation)((0, mongoose_1.modelNames)(), req.body.operationName);
+            const { query, operationName } = req.body;
+            const queryName = operationName || query.split(' ')[1];
+            const entityName = (0, _helpers_1.getEntityFromOperation)((0, mongoose_1.modelNames)(), queryName);
             if (!entityName)
                 return new _helpers_1.CustomError(constants_1.ErrorMessages.INVALID_OPERATION_NAME, _helpers_1.StatusCode.InvalidOperationName);
             const findOwnedEntity = entityName && (yield (0, mongoose_1.model)(entityName).findOne({ _id: argsId, user: decoded.userId }).lean());

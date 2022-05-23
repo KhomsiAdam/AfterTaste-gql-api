@@ -3,11 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userSchema = void 0;
+exports.updateOrderSchema = exports.createOrderSchema = void 0;
 const joi_1 = __importDefault(require("joi"));
-exports.userSchema = joi_1.default.object({
-    firstname: joi_1.default.string().alphanum().trim(),
-    lastname: joi_1.default.string().alphanum().trim(),
-    fidelity: joi_1.default.number(),
-});
+exports.createOrderSchema = joi_1.default.object({});
+exports.updateOrderSchema = joi_1.default.object({});
 //# sourceMappingURL=validation.js.map

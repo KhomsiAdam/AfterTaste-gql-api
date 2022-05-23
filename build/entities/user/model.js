@@ -37,6 +37,10 @@ const UserSchema = new mongoose_1.Schema({
         type: mongoose_1.Schema.Types.ObjectId,
         ref: 'Auth',
     },
+    fidelity: {
+        type: Number,
+        default: 0,
+    },
 }, { timestamps: true });
 UserSchema.pre('save', function save(next) {
     return __awaiter(this, void 0, void 0, function* () {

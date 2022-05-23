@@ -10,16 +10,21 @@ const stream = {
 };
 const skip = (req) => {
     const env = process.env.NODE_ENV || 'development';
-    if (req.body.operationName === 'IntrospectionQuery' || req.method === 'OPTIONS')
+    if (req.body && req.body.operationName && req.body.operationName === 'IntrospectionQuery')
+        return true;
+    if (req.method === 'OPTIONS')
         return true;
     return env !== 'development';
 };
 morgan_1.default.token('graphql-query', (req) => {
+    if (!req.body)
+        return '';
     const { query, operationName } = req.body;
     if (!query)
         return '';
+    const queryName = operationName || query.split(' ')[1];
     const operationType = query.split(' ')[0];
-    return `${operationType}: ${operationName}`;
+    return `${operationType}: ${queryName}`;
 });
 const morganMiddleware = (0, morgan_1.default)(':method :url :status - :graphql-query - :response-time ms', { stream, skip });
 exports.default = morganMiddleware;
