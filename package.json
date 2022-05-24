@@ -11,6 +11,7 @@
     "dev": "nodemon --exec ts-node -r tsconfig-paths/register src/index.ts",
     "dev:sync": "nodemon --exec ts-node -r tsconfig-paths/register src/index.ts --trace-sync-io",
     "dev:pm2": "pm2 start ecosystem.config.js",
+    "prod": "cross-env NODE_ENV=production node build/index.js",
     "seed:admin": "ts-node -r tsconfig-paths/register src/seeders/seedAdmin.ts",
     "seed:users": "ts-node -r tsconfig-paths/register src/seeders/seedUsers.ts",
     "entity": "ts-node src/tasks/generateEntity.ts",

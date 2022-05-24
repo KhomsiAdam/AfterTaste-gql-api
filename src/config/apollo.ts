@@ -17,7 +17,12 @@ const port = process.env.PORT || 4000;
 export const initializeExpress = async (schema: GraphQLSchema) => {
   const app = express();
 
-  app.use(helmet());
+  app.use(
+    helmet({
+      crossOriginEmbedderPolicy: process.env.NODE_ENV !== 'development',
+      contentSecurityPolicy: process.env.NODE_ENV !== 'development',
+    }),
+  );
   // app.use(bodyParser.json());
   app.use(cookieParser());
   app.use(morgan);

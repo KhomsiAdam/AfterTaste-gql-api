@@ -11,6 +11,7 @@ exports.typeDefs = (0, apollo_server_express_1.gql) `
   type Product {
     _id: ObjectId
     name: String
+    category: String
     description: String
     images: [String]
     price: Float
@@ -48,12 +49,14 @@ exports.typeDefs = (0, apollo_server_express_1.gql) `
   # Inputs
   input ProductCreatedInput {
     name: String!
+    category: String!
     description: String!
     images: [String]!
     price: Float!
   }
   input ProductUpdatedInput {
     name: String
+    category: String
     description: String
     images: [String]
     price: Float

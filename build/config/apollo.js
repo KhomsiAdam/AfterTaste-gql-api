@@ -27,11 +27,13 @@ const context_1 = require("./context");
 const port = process.env.PORT || 4000;
 const initializeExpress = (schema) => __awaiter(void 0, void 0, void 0, function* () {
     const app = (0, express_1.default)();
-    app.use((0, helmet_1.default)());
+    app.use((0, helmet_1.default)({
+        crossOriginEmbedderPolicy: process.env.NODE_ENV !== 'development',
+        contentSecurityPolicy: process.env.NODE_ENV !== 'development',
+    }));
     app.use((0, cookie_parser_1.default)());
     app.use(_middlewares_1.morgan);
     app.use((0, compression_1.default)());
-    app.use('/graphql', _middlewares_1.limiter);
     app.use(express_1.default.json({ limit: '10kb' }));
     app.use((0, express_mongo_sanitize_1.default)());
     const server = new apollo_server_express_1.ApolloServer({
