@@ -9,7 +9,7 @@ import responseCachePlugin from 'apollo-server-plugin-response-cache';
 import { ApolloServer } from 'apollo-server-express';
 import { GraphQLSchema } from 'graphql';
 import { log } from '@services/logger.service';
-import { morgan, limiter } from '@middlewares';
+import { morgan } from '@middlewares';
 import { context } from './context';
 
 const port = process.env.PORT || 4000;
@@ -22,7 +22,7 @@ export const initializeExpress = async (schema: GraphQLSchema) => {
   app.use(cookieParser());
   app.use(morgan);
   app.use(compression());
-  app.use('/graphql', limiter);
+  // app.use('/graphql', limiter);
   app.use(express.json({ limit: '10kb' }));
   app.use(mongoSanitize());
 

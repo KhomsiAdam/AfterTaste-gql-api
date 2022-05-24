@@ -360,6 +360,7 @@ export type PaginationInput = {
 export type Product = {
   __typename?: 'Product';
   _id?: Maybe<Scalars['ObjectId']>;
+  category?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
   images?: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -380,6 +381,7 @@ export type ProductCreated = {
 };
 
 export type ProductCreatedInput = {
+  category: Scalars['String'];
   description: Scalars['String'];
   images: Array<InputMaybe<Scalars['String']>>;
   name: Scalars['String'];
@@ -410,6 +412,7 @@ export type ProductUpdated = {
 };
 
 export type ProductUpdatedInput = {
+  category?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   images?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   name?: InputMaybe<Scalars['String']>;
@@ -1124,6 +1127,7 @@ export type OrdersResultResolvers<ContextType = Context, ParentType extends Reso
 
 export type ProductResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Product'] = ResolversParentTypes['Product']> = {
   _id?: Resolver<Maybe<ResolversTypes['ObjectId']>, ParentType, ContextType>;
+  category?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   images?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;

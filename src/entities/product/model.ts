@@ -8,6 +8,10 @@ const ProductSchema = new Schema<ProductEntity>(
       type: String,
       required: true,
     },
+    category: {
+      type: String,
+      required: true,
+    },
     description: {
       type: String,
       required: true,

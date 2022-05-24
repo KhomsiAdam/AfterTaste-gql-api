@@ -9,6 +9,7 @@ export const typeDefs = gql`
   type Product {
     _id: ObjectId
     name: String
+    category: String
     description: String
     images: [String]
     price: Float
@@ -46,12 +47,14 @@ export const typeDefs = gql`
   # Inputs
   input ProductCreatedInput {
     name: String!
+    category: String!
     description: String!
     images: [String]!
     price: Float!
   }
   input ProductUpdatedInput {
     name: String
+    category: String
     description: String
     images: [String]
     price: Float
