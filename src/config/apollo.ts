@@ -49,7 +49,10 @@ export const initializeExpress = async (schema: GraphQLSchema) => {
   server.applyMiddleware({
     app,
     path: '/graphql',
-    cors: { origin: [process.env.CLIENT_ORIGIN as string, 'http://localhost:3000'], credentials: true },
+    cors: {
+      origin: [process.env.CLIENT_ORIGIN as string, 'http://localhost:3000', 'http://192.168.8.101:8081'],
+      credentials: true,
+    },
   });
 
   app.listen(port, async () => {
