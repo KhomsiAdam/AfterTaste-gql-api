@@ -54,7 +54,7 @@ const initializeExpress = (schema) => __awaiter(void 0, void 0, void 0, function
         app,
         path: '/graphql',
         cors: {
-            origin: [process.env.CLIENT_ORIGIN, 'http://localhost:3000', 'http://192.168.8.101:8081'],
+            origin: '*',
             credentials: true,
         },
     });
