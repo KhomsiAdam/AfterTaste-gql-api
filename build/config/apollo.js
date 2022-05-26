@@ -54,7 +54,7 @@ const initializeExpress = (schema) => __awaiter(void 0, void 0, void 0, function
         app,
         path: '/graphql',
         cors: {
-            origin: '*',
+            origin: true,
             credentials: true,
         },
     });
