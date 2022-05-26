@@ -6,16 +6,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateProductSchema = exports.createProductSchema = void 0;
 const joi_1 = __importDefault(require("joi"));
 exports.createProductSchema = joi_1.default.object({
-    name: joi_1.default.string().alphanum().trim().required(),
-    category: joi_1.default.string().alphanum().trim().required(),
-    description: joi_1.default.string().alphanum().trim().required(),
+    name: joi_1.default.string().trim().required(),
+    category: joi_1.default.string().trim().required(),
+    description: joi_1.default.string().trim().required(),
     images: joi_1.default.array().items(joi_1.default.string().trim()).required(),
     price: joi_1.default.number().required(),
 });
 exports.updateProductSchema = joi_1.default.object({
-    name: joi_1.default.string().alphanum().trim(),
-    category: joi_1.default.string().alphanum().trim(),
-    description: joi_1.default.string().alphanum().trim(),
+    name: joi_1.default.string().trim(),
+    category: joi_1.default.string().trim(),
+    description: joi_1.default.string().trim(),
     images: joi_1.default.array().items(joi_1.default.string().trim()),
     price: joi_1.default.number(),
 });

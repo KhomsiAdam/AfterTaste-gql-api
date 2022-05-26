@@ -53,7 +53,10 @@ const initializeExpress = (schema) => __awaiter(void 0, void 0, void 0, function
     server.applyMiddleware({
         app,
         path: '/graphql',
-        cors: { origin: [process.env.CLIENT_ORIGIN, 'http://localhost:3000'], credentials: true },
+        cors: {
+            origin: [process.env.CLIENT_ORIGIN, 'http://localhost:3000', 'http://192.168.8.101:8081'],
+            credentials: true,
+        },
     });
     app.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
         logger_service_1.log.info(`Server ready at: http://localhost:${port}${server.graphqlPath}`);

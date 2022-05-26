@@ -50,7 +50,7 @@ export const initializeExpress = async (schema: GraphQLSchema) => {
     app,
     path: '/graphql',
     cors: {
-      origin: [process.env.CLIENT_ORIGIN as string, 'http://localhost:3000', 'http://192.168.8.101:8081'],
+      origin: '*',
       credentials: true,
     },
   });
